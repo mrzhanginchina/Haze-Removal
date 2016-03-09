@@ -3,7 +3,7 @@
 
 from PIL import Image
 import numpy as np
-from GuideFilter import guided_filter
+from guidedfilter import guidedfilter
 
 def ind2sub(array_shape, ind):
     rows = (ind.astype('int') / array_shape[1])
@@ -37,7 +37,7 @@ darkImage = img.min(axis=2)
 A = img[i, j, :].mean()
 transmission = 1 - omega * darkImage / A
 
-transmissionFilter = guided_filter(grayImage, transmission, r, eps )
+transmissionFilter = guidedfilter(grayImage, transmission, r, eps )
 transmissionFilter[transmissionFilter < t] = t
 
 resultImage = np.zeros_like(img)
