@@ -3,6 +3,7 @@
 
 from PIL import Image
 import numpy as np
+from HazeRemoval import guided_filter
 
 windowSize = 24
 w0 = 0.6
