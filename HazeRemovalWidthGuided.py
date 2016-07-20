@@ -5,13 +5,15 @@ from PIL import Image
 import numpy as np
 from guidedfilter import guidedfilter
 
+
 def ind2sub(array_shape, ind):
     rows = (ind.astype('int') / array_shape[1])
-    cols = (ind.astype('int') % array_shape[1]) # or numpy.mod(ind.astype('int'), array_shape[1])
+    cols = (ind.astype('int') % array_shape[1])  # or numpy.mod(ind.astype('int'), array_shape[1])
     return (rows, cols)
 
+
 def rgb2gray(rgb):
-    return np.dot(rgb[...,:3], [0.299, 0.587, 0.114])
+    return np.dot(rgb[..., :3], [0.299, 0.587, 0.114])
 
 imageName = "canon3.bmp"
 # imageName = "Haze.jpg"
@@ -21,7 +23,7 @@ r = 80
 eps = 10 ** (-3)
 t = 0.1
 
-oriImage = Image.open('images/'+imageName)
+oriImage = Image.open('images/' + imageName)
 img = np.array(oriImage).astype(np.double) / 255.0
 # numpy rgb2gray don't equal matlab rgb2gray
 # grayImage = np.array(oriImage.convert('L')).astype(np.double) / 255.0
@@ -37,7 +39,7 @@ darkImage = img.min(axis=2)
 A = img[i, j, :].mean()
 transmission = 1 - omega * darkImage / A
 
-transmissionFilter = guidedfilter(grayImage, transmission, r, eps )
+transmissionFilter = guidedfilter(grayImage, transmission, r, eps)
 transmissionFilter[transmissionFilter < t] = t
 
 resultImage = np.zeros_like(img)

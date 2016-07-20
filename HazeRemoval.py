@@ -3,7 +3,6 @@
 
 from PIL import Image
 import numpy as np
-from HazeRemoval import guided_filter
 
 windowSize = 24
 w0 = 0.6
@@ -11,7 +10,7 @@ t0 = 0.1
 
 imageName = "tiananmen1.png"
 imageName = "canon3.bmp"
-oriImage = np.array(Image.open('images/'+imageName))
+oriImage = np.array(Image.open('images/' + imageName))
 imageSize = oriImage.shape
 
 # TODO
@@ -29,11 +28,9 @@ t[t < t0] = t0
 
 # t = np.array([t, t, t])
 J = oriImage
-J[:,:,0] = (oriImage[:,:,0] - (1-t) * maxDarkChannel)/t
-J[:,:,1] = (oriImage[:,:,1] - (1-t) * maxDarkChannel)/t
-J[:,:,2] = (oriImage[:,:,2] - (1-t) * maxDarkChannel)/t
+J[:, :, 0] = (oriImage[:, :, 0] - (1 - t) * maxDarkChannel) / t
+J[:, :, 1] = (oriImage[:, :, 1] - (1 - t) * maxDarkChannel) / t
+J[:, :, 2] = (oriImage[:, :, 2] - (1 - t) * maxDarkChannel) / t
 
 result = Image.fromarray(J)
 result.show()
-
-
