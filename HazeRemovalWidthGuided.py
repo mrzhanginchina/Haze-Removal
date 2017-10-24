@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 from PIL import Image
+import os
 import numpy as np
 from guidedfilter import guidedfilter
 
@@ -30,7 +31,8 @@ class HazeRemoval:
         darkImage = img.min(axis=2)
 
         (i, j) = self._ind2sub(darkImage.shape, darkImage.argmax())
-        A = img[i, j, :].mean()
+
+        A = img[int(i), int(j), :].mean()
         transmission = 1 - self.omega * darkImage / A
 
         transmissionFilter = guidedfilter(grayImage, transmission, self.r, self.eps )
@@ -47,7 +49,15 @@ class HazeRemoval:
         return result
 
 if __name__ == '__main__':
-    imageName = "canon3.bmp"
-    hz = HazeRemoval("images/canon3.bmp")
-    result = hz.haze_removal()
-    result.show()
+    list_dir_file = os.walk("./images/")
+    list_file = []
+    for i in list_dir_file:
+        list_file = i[2]
+
+    for i in list_file:
+        imageName = i
+        file_path = os.path.join("./images", imageName)
+        Image.open(file_path).show()
+        result = HazeRemoval(file_path)
+        result.haze_removal().show()
+        
