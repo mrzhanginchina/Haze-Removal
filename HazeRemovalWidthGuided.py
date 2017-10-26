@@ -56,8 +56,21 @@ if __name__ == '__main__':
 
     for i in list_file:
         imageName = i
-        file_path = os.path.join("./images", imageName)
+        file_path = os.path.join("./images/", imageName)
         Image.open(file_path).show()
         result = HazeRemoval(file_path)
-        result.haze_removal().show()
-        
+        if not os.path.exists("./image_remove/"):
+            print("sorry, it is not exist!")
+            os.mkdir("./image_remove/")
+        if os.path.exists("./image_remove/"):
+            print("OK, it is exist!")
+
+        file_processed = result.haze_removal()
+        file_processed_path = os.path.join("./image_remove/", imageName)
+        file_processed.save(file_processed_path)
+
+        # with open(file_processed_path, 'w') as f_tem:
+        #     f_tem.write(str(file_processed))
+
+        file_processed.show()
+
