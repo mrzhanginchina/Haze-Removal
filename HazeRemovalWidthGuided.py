@@ -49,15 +49,15 @@ class HazeRemoval:
         return result
 
 if __name__ == '__main__':
-    list_dir_file = os.walk("./images/")
+    list_dir_file = os.walk("./rain/")
     list_file = []
     for i in list_dir_file:
         list_file = i[2]
 
     for i in list_file:
         imageName = i
-        file_path = os.path.join("./images", imageName)
+        file_path = os.path.join("./rain", imageName)
         Image.open(file_path).show()
         result = HazeRemoval(file_path)
         result.haze_removal().show()
-        
+
